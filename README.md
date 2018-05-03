@@ -30,8 +30,8 @@ Let's map it into a Go Struct:
 
 ```golang
 type Person struct {
-    FirstName string `posline:10"`
-    SurName   string `posline:10"`
+    FirstName string `posline:"10"`
+    SurName   string `posline:"10"`
     Age       int    `posline:"2"`
     City      string `posline:"15"`
     Country   string `posline:"2"
@@ -41,13 +41,12 @@ type Person struct {
 Now, to generate the previous flat line, we just need to marshal it:
 
 ```golang
-
   john := Person{
       FirstName: "JOHN",
-      SurName: "DOE",
-      Age: 23,
-      City: "São Paulo",
-      Country: "BR"
+      SurName:   "DOE",
+      Age:       23,
+      City:      "São Paulo",
+      Country:   "BR",
   }
 
   flat, err := posline.Marshal(john)
