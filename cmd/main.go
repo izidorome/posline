@@ -8,14 +8,13 @@ import (
 
 // Proposal reutns ok
 type Proposal struct {
-	Name     string  `posline:"30,padleft,zerofill"`
+	Name     string  `posline:"10,padleft,zerofill"`
 	Address  string  `posline:"25"`
 	Money    int     `posline:"12,padleft,zerofill"`
 	Interest float32 `posline:"10,zerofill,nofp"`
 }
 
 func main() {
-
 	p := Proposal{
 		Name:    "32",
 		Address: "Avenida Ariçaba 58",

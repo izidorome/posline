@@ -1,10 +1,30 @@
 package posline
 
 import (
-	"fmt"
+	"errors"
 	"reflect"
 	"strings"
 )
+
+const tagname = "posline"
+
+var (
+	// ErrInvalidSize is raised when the size tag are not int
+	ErrInvalidSize = errors.New("posline: tag size should be an integer")
+)
+
+type tagCollection struct {
+	Name string
+	Tags []tag
+}
+
+type tag struct {
+	Name         string
+	Size         int
+	PadLeft      bool
+	ZeroFill     bool
+	NoFloatPoint bool
+}
 
 // Marshal parsers all structs and transform into one string with all lines
 func Marshal(v interface{}) (string, error) {
@@ -17,7 +37,6 @@ func Marshal(v interface{}) (string, error) {
 		l, err := marshalStruct(rv)
 
 		if err != nil {
-			fmt.Println("err", err)
 			return "", err
 		}
 
@@ -28,7 +47,7 @@ func Marshal(v interface{}) (string, error) {
 			l, err := marshalStruct(rv.Index(i))
 
 			if err != nil {
-				fmt.Println("err:", err)
+				return "", err
 			}
 
 			lines.WriteString(l)
@@ -53,7 +72,7 @@ func marshalStruct(rv reflect.Value) (string, error) {
 		return "", err
 	}
 
-	content, err := parseValue(rv, c)
+	content := parseValue(rv, c)
 
 	return content, nil
 }

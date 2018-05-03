@@ -9,21 +9,6 @@ import (
 	"github.com/noverde/posline/pad"
 )
 
-const tagname = "posline"
-
-type tagCollection struct {
-	Name string
-	Tags []tag
-}
-
-type tag struct {
-	Name         string
-	Size         int
-	PadLeft      bool
-	ZeroFill     bool
-	NoFloatPoint bool
-}
-
 func parseTags(t reflect.Type) (tagCollection, error) {
 	var tags []tag
 
@@ -41,7 +26,7 @@ func parseTags(t reflect.Type) (tagCollection, error) {
 		size, err := strconv.Atoi(opts[0])
 
 		if err != nil {
-			return tagCollection{}, err
+			return tagCollection{}, ErrInvalidSize
 		}
 
 		zerofill := false
@@ -83,7 +68,7 @@ func parseTags(t reflect.Type) (tagCollection, error) {
 	return line, nil
 }
 
-func parseValue(rv reflect.Value, line tagCollection) (string, error) {
+func parseValue(rv reflect.Value, line tagCollection) string {
 	var content strings.Builder
 	t := rv.Type()
 
@@ -97,7 +82,7 @@ func parseValue(rv reflect.Value, line tagCollection) (string, error) {
 			continue
 		}
 
-		fieldContent, err := convert(value, tg)
+		fieldContent := convert(value, tg)
 
 		var sep string
 		if tg.ZeroFill {
@@ -114,16 +99,12 @@ func parseValue(rv reflect.Value, line tagCollection) (string, error) {
 		}
 
 		content.WriteString(fline)
-
-		if err != nil {
-			return "", err
-		}
 	}
 
-	return content.String(), nil
+	return content.String()
 }
 
-func convert(v reflect.Value, t tag) (string, error) {
+func convert(v reflect.Value, t tag) string {
 	var content string
 
 	switch v.Kind() {
@@ -153,7 +134,7 @@ func convert(v reflect.Value, t tag) (string, error) {
 		break
 	}
 
-	return content, nil
+	return content
 }
 
 func tags(l tagCollection) map[string]tag {
