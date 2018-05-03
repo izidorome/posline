@@ -18,7 +18,7 @@ func TestMarshal(t *testing.T) {
 		expected    string
 	}{
 		{
-			description: "it encodes single struct",
+			description: "it encodes a single struct",
 			in: []Person{
 				Person{
 					Name: "John",
