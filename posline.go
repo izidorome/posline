@@ -21,7 +21,7 @@ type tagCollection struct {
 type tag struct {
 	Name         string
 	Size         int
-	PadLeft      bool
+	LeftPad      bool
 	ZeroFill     bool
 	NoFloatPoint bool
 }

@@ -30,7 +30,7 @@ func parseTags(t reflect.Type) (tagCollection, error) {
 		}
 
 		zerofill := false
-		padleft := false
+		leftpad := false
 		nofp := false
 
 		modifiers := opts[1:]
@@ -40,8 +40,8 @@ func parseTags(t reflect.Type) (tagCollection, error) {
 				zerofill = true
 			}
 
-			if m == "padleft" {
-				padleft = true
+			if m == "leftpad" {
+				leftpad = true
 			}
 
 			if m == "nofp" {
@@ -52,7 +52,7 @@ func parseTags(t reflect.Type) (tagCollection, error) {
 		t := tag{
 			Name:         field.Name,
 			Size:         size,
-			PadLeft:      padleft,
+			LeftPad:      leftpad,
 			ZeroFill:     zerofill,
 			NoFloatPoint: nofp,
 		}
@@ -92,7 +92,7 @@ func parseValue(rv reflect.Value, line tagCollection) string {
 		}
 
 		var fline string
-		if tg.PadLeft {
+		if tg.LeftPad {
 			fline = pad.Left(fieldContent, tg.Size, sep)
 		} else {
 			fline = pad.Right(fieldContent, tg.Size, sep)

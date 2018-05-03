@@ -71,9 +71,9 @@ func TestMarshal(t *testing.T) {
 
 func TestMarshalWithOptions(t *testing.T) {
 	type Bank struct {
-		Owner           string  `posline:"10,padleft"`
-		Account         int     `posline:"10,padleft,zerofill"`
-		Balance         float32 `posline:"9,padleft,zerofill,nofp"`
+		Owner           string  `posline:"10,leftpad"`
+		Account         int     `posline:"10,leftpad,zerofill"`
+		Balance         float32 `posline:"9,leftpad,zerofill,nofp"`
 		LastTransaction float32 `posline:"9"`
 	}
 
