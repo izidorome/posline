@@ -1,4 +1,5 @@
 # posline
+[![Build Status](https://travis-ci.org/noverde/posline.svg?branch=master)](https://travis-ci.org/noverde/posline)
 
 The posline package aims to provide easy serialization of Go structs into positional fixed-width strings. 
 These kind of structures are useful when integrating with old system which depends on positional flat files
